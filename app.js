@@ -6,8 +6,8 @@ import ReactMapGL, { LinearInterpolator, FlyToInterpolator } from "react-map-gl"
 import { easeLinear } from "d3-ease";
 
 /* Core Components */
-import { LayerControls } from "./layer-control";
-import DeckGLOverlay from "./deckgl-overlay";
+import { LayerControls } from "./LayerControl";
+import DeckGLOverlay from "./DeckglOverlay";
 
 /* Style */
 import './styles/style.scss';
@@ -16,13 +16,13 @@ import './styles/style.scss';
 import taxiData from "./data/taxi";
 import { BUILDINGS } from "./data/buildings";
 import { TRIPS } from "./data/trips";
+import { HEXAGON_CONTROLS, hexagonView } from './config/layer-configs';
 
 // Set your mapbox token here
-//const MAPBOX_STYLE = "mapbox://styles/uberdata/cive485h000192imn6c6cc8fc";
-//const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoicGFydmV6ayIsImEiOiJjamJnMDJ2cmEyeHZxMzRwZXJsOG16N3JsIn0.UrrntK0_M0WHR1t8NYW-aA"; // eslint-disable-line
-  import { HEXAGON_CONTROLS, hexagonView } from './config/layer-configs';
+const MAPBOX_STYLE1 = "mapbox://styles/mapbox/dark-v9";
+const MAPBOX_STYLE2 = "data/map-style-dark-v9-no-labels.json";
 
 class Root extends Component {
 
@@ -166,6 +166,10 @@ class Root extends Component {
     );
   }
 
+  _switchLabels(){
+    
+  }
+
   _flyToSPOT(location) {
     const viewport = {
       ...this.state.viewport,
@@ -203,8 +207,12 @@ class Root extends Component {
         />
         <ReactMapGL
           {...viewport}
-
-          mapStyle="mapbox://styles/mapbox/dark-v9"
+          /*
+          dark-v9
+          navigation-preview-night-v2
+          navigation-guidance-night-v2
+          */
+          mapStyle={MAPBOX_STYLE2}
           mapboxApiAccessToken={MAPBOX_TOKEN}
           onViewportChange={this._onViewportChange.bind(this)}
           ref={div => {
@@ -226,5 +234,12 @@ class Root extends Component {
     );
   }
 }
+/*
+map.style.stylesheet.layers.forEach(function(layer) {
+  if (layer.type === 'symbol') {
+      map.removeLayer(layer.id);
+  }
+});
+*/
 
 render(<Root />, document.body.appendChild(document.createElement("div")));

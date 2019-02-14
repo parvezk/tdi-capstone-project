@@ -67,6 +67,20 @@ export default class DeckGLOverlay extends Component {
         lightSettings: LIGHT_SETTINGS
       }) : null,
 
+      this.props.showHexagon ? new HexagonLayer({
+        id: 'heatmap',
+        colorRange: HEATMAP_COLORS,
+        elevationRange,
+        elevationScale: 5,
+        extruded: true,
+        getPosition: d => d.position,
+        lightSettings: LIGHT_SETTINGS2,
+        opacity: 1,
+        pickable: true,
+        radius: 300,
+        ...this.props
+      }) : null
+
     ];
 
     return <DeckGL {...viewport} layers={layers} />;

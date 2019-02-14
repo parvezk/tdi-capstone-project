@@ -59,6 +59,10 @@ header {
     p {
         margin: 0 10px 0 0;
         line-height: 1.5em;
+        font-size: 13px;
+        h4 {
+            display: inline-block;
+        }
     }
 
     div.congestion_points {
@@ -85,14 +89,14 @@ header {
     }
 
     .ctrls {
-        width: 65%;
+        width: 100%;
         clear: both;
 
         .input-group {
             display: inine-block;
             float: left;
         }
-        label {margin-left: 3px; }
+        label {margin-left: 2px; }
     }
 
     .disclaimers{

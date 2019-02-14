@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { layerControl } from "./styles/style";
 
-import * as congestionData from "./data/congestion.json";
+import * as CongestionSpotData from "./data/congestion.json";
 
 export class LayerControls extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export class LayerControls extends Component {
 
     const spot = e.target.innerHTML;
     console.log(spot);
-    if (flyToSPOT) flyToSPOT(congestionData[spot]);
+    if (flyToSPOT) flyToSPOT(CongestionSpotData[spot]);
   }
 
   render() {
@@ -37,19 +37,22 @@ export class LayerControls extends Component {
 
     return (
       <div className="layer-controls" style={layerControl}>
-        <h4>{"Citywide Congested Corridors Project"}</h4>
-        <p>A capstone project proposal for The Data Incubator Fellowship Program by Parvez Kose</p>
+        <h4>{"New York CityWide Congested Corridors"}</h4>
+        <p>A Capstone Project proposal for The Data Incubator Fellowship Program by Parvez Kose</p>
+        
         
         <div className="congestion_points">
-        <h4>Selected Congestion Corridors</h4>
-        <p>Click the link below to interpolate between locations.</p>
+        
+        <p><h4>Traffic Corridors: </h4>The street intersections with highest traffic congestion in New York city. </p>
         <br />
+        <p>Click the link below to interpolate between locations.</p>
+        
           <ul
           ref={div => {
             this.SPOTS= div;
             return div;
           }}>
-            {Object.keys(congestionData).map((item, key) => (
+            {Object.keys(CongestionSpotData).map((item, key) => (
               <li>
                 <a 
                 href="#" 
@@ -63,6 +66,24 @@ export class LayerControls extends Component {
           </ul>
           <div><button onClick={this._flyToSPOT.bind(this)}>Reset View</button></div>
         </div>
+
+        
+        {Object.keys(settings).map(key =>
+          <div className="ctrls" key={key}>
+            
+            <Setting
+              displayName={propTypes[key].displayName}
+              settingName={key}
+              value={settings[key]}
+              propType={propTypes[key]}
+              onChange={this._onValueChange.bind(this)}/>
+              
+          </div>)}
+          <br />
+          <div className="disclaimers">
+          <em>*Green: Pickups *Blue: Drops *Red: High Intensity</em>
+          <br />
+          </div>
       </div>
     );
   }
@@ -87,16 +108,17 @@ const Setting = props => {
 const Checkbox = ({settingName, value, onChange, displayName}) => {
   return (
     
-      <div>
+      
         <div className="input-group" >
         <input
           type="checkbox"
           id={settingName}
           checked={value}
           onChange={ e => onChange(settingName, e.target.checked) }/>
+          <label>{displayName}</label>
       </div>
-      <label>{displayName}</label>
-      </div>
+      
+      
 
   );
 };
